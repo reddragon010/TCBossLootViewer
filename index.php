@@ -38,6 +38,7 @@ if(isset($_GET['id'])){
 				<th>Entry</th>
 				<th>Name</th>
 				<th>Ref</th>
+				<th>DropChance</th>
 			</tr>
 			<?php
 		  foreach($creature->loot as $item){
@@ -46,6 +47,7 @@ if(isset($_GET['id'])){
 				<td><?php echo $item->entry ?></td>
 				<td><?php echo $item->name ?></td>
 				<td><?php echo $item->ref ?></td>
+				<td><?php echo $item->drop_chance ?></td>
 			</tr>
 			<?php
 			}

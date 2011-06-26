@@ -28,6 +28,7 @@ class Database
 	
 	public static function query($sql){
 		self::start();
+				//echo $sql . '<br />' . "\n";
 		$result = self::$instance->connection->query($sql);
 		if($result){
 			return $result;
