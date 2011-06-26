@@ -3,7 +3,7 @@ require_once('config.php');
 require_once('classes/database.php');
 require_once('classes/model.php');
 require_once('classes/item.php');
-require_once('classes/boss.php');
+require_once('classes/creature.php');
 
 $db = Database::start();
 if(isset($_GET['id'])){
@@ -12,9 +12,9 @@ if(isset($_GET['id'])){
 	die("No Boss-ID given!");
 }
 
-$boss = Boss::find($boss_id);
-$boss_name = $boss->name;
-$loot = $boss->loot;
+$creature = Creature::find($boss_id);
+$creature_name = $creature->name;
+$loot = $creature->loot;
 
 ?>
 	<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -29,7 +29,7 @@ $loot = $boss->loot;
 		<!-- Date: 2011-06-25 -->
 	</head>
 	<body>
-		<h1><?php echo $boss_name ?></h1>
+		<h1><?php echo $creature_name ?></h1>
 		<table>
 			<tr>
 				<th>Entry</th>

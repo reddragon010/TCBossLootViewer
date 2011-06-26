@@ -3,19 +3,17 @@
 /**
 * 
 */
-class Boss extends Model
+class Creature extends Model
 {
 	private $loot_list;
 	
-	public static function find($entry_or_name){
-		if(is_numeric($entry_or_name)){
-			$sql = "SELECT entry, difficulty_entry_1 as hero_entry, name from creature_template where entry =".$entry_or_name.";";
-		} else {
-			$sql = "SELECT entry, difficulty_entry_1 as hero_entry, name from creature_template where entry =".$entry_or_name.";";
+	public static function find($entry){
+		if(is_numeric($entry)){
+			$sql = "SELECT entry, difficulty_entry_1 as hero_entry, name from creature_template where entry =".$entry.";";
 		}
 		$result = Database::query($sql)->fetch();
 		if(!empty($result)){
-			return new Boss($result);
+			return new Creature($result);
 		}
 	}
 	
