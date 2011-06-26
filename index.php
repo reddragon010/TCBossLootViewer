@@ -7,14 +7,9 @@ require_once('classes/creature.php');
 
 $db = Database::start();
 if(isset($_GET['id'])){
-	$boss_id = (int)$_GET['id'];
-} else {
-	die("No Boss-ID given!");
+	$creature_id = (int)$_GET['id'];	
+	$creature = Creature::find($creature_id);
 }
-
-$creature = Creature::find($boss_id);
-$creature_name = $creature->name;
-$loot = $creature->loot;
 
 ?>
 	<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -29,7 +24,15 @@ $loot = $creature->loot;
 		<!-- Date: 2011-06-25 -->
 	</head>
 	<body>
-		<h1><?php echo $creature_name ?></h1>
+		<div>
+			<form action="index.php" method="get">
+				<lable for="id">ID</lable>
+				<input type="text" name="id" id="creature-id" <?php if(isset($creature_id)){echo 'value="'.$creature_id.'"';}?> />
+				<input type="submit" name="submit" />
+			</form>
+		</div>
+		<?php if(isset($creature)){ ?>
+		<h1><?php echo $creature->name ?></h1>
 		<table>
 			<tr>
 				<th>Entry</th>
@@ -37,7 +40,7 @@ $loot = $creature->loot;
 				<th>Ref</th>
 			</tr>
 			<?php
-		  foreach($loot as $item){
+		  foreach($creature->loot as $item){
 			?>
 			<tr>
 				<td><?php echo $item->entry ?></td>
@@ -48,5 +51,6 @@ $loot = $creature->loot;
 			}
 			?>	
 		</table>
+		<?php } ?>
 	</body>
 	</html>
