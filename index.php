@@ -24,6 +24,7 @@ if(isset($_GET['id'])){
 		<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8">
 		<!-- Wowhead Item Links -->
 		<script type="text/javascript" src="http://static.wowhead.com/widgets/power.js"></script>
+		<script type="text/javascript" src="jquery.js"></script>
 	</head>
 	<body>
 		<table>
@@ -99,5 +100,9 @@ if(isset($_GET['id'])){
 		</table>
 		</div>
 		<?php } ?>
+		<div style="clear: both; padding: 20px; width: 100%; text-align: center">
+		Idea & Code By Norseman & Robigo At <a href="http://rising-gods.de">Rising-Gods</a>
+		</div>
+		</div>
 	</body>
 	</html>
