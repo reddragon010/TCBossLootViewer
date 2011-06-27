@@ -65,3 +65,34 @@ th.specalt {
 	font: bold 10px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
 	color: #797268;
 }
+
+/* tables */
+table thead tr .header {
+	background-image: url(images/bg.gif);
+	background-repeat: no-repeat;
+	background-position: center right;
+	cursor: pointer;
+}
+table thead tr .headerSortUp {
+	background-image: url(images/asc.gif);
+}
+table thead tr .headerSortDown {
+	background-image: url(images/desc.gif);
+}
+table thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
+background-color: #8dbdd8;
+}
+
+
+#message {
+	text-align: center;
+	color: #C22;
+	font-size: 200%;
+	border: 1px solid #C1DAD7;
+	padding: 5px;
+	background-color: #FFF;
+}
+
+a {
+	cursor: pointer;
+}

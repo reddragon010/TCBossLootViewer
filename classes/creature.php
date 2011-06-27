@@ -17,13 +17,17 @@ class Creature extends Model
 		if(is_null($entry)){
 			$entry = $this->entry;
 		}
-		$d_loot = $this->find_direct_loot($this->entry);
-		$r_loot = $this->find_ref_loot($this->entry);
+		$d_loot = $this->find_direct_loot($entry);
+		$r_loot = $this->find_ref_loot($entry);
 		return array_merge($d_loot, $r_loot);
 	}
 	
 	public function get_hero_loot(){
-		return $this->get_loot($this->hero_entry);
+		if($this->hero_entry != 0){
+			return $this->get_loot($this->hero_entry);
+		} else {
+			return array();
+		}
 	}
 	
 	private function find_ref_loot($entry){

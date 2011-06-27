@@ -1,4 +1,8 @@
 <?php
+ini_set('display_errors', ON);
+error_reporting(E_ALL);
+
+
 require_once('config.php');
 require_once('classes/database.php');
 require_once('classes/model.php');
@@ -9,8 +13,12 @@ $db = Database::start();
 if(isset($_GET['id'])){
 	$creature_id = (int)$_GET['id'];	
 	$creature = Creature::find($creature_id);
-	$loot = $creature->loot;
-	$hero_loot = $creature->hero_loot;
+	if($creature){
+		$loot = $creature->loot;
+		$hero_loot = $creature->hero_loot;
+	} else {
+		$message = "No Creature With ID $creature_id Found!";
+	}
 }
 
 ?>
@@ -25,6 +33,13 @@ if(isset($_GET['id'])){
 		<!-- Wowhead Item Links -->
 		<script type="text/javascript" src="http://static.wowhead.com/widgets/power.js"></script>
 		<script type="text/javascript" src="jquery.js"></script>
+		<script type="text/javascript" src="jquery.tablesorter.js"></script>
+		<script type="text/javascript">
+		$(document).ready(function(){
+			$("#loot_table").tablesorter();
+			$("#hero_loot_table").tablesorter();
+		})
+		</script>
 	</head>
 	<body>
 		<table>
@@ -38,30 +53,34 @@ if(isset($_GET['id'])){
 			</td>
 			</tr>
 		</table>
-		<?php if(isset($creature)){ ?>
+		<?php if(isset($message)){ ?>
+		<div id="message"><?php echo $message ?></div>
+		<?php } ?>
+		<?php if($creature){ ?>
 		<table>
-			<tr><th><h1><?php echo $creature->name ?></h1></th></tr>
+			<tr><th><h1><?php echo $creature->name ?></h1>(NormalID: <?php echo $creature->entry ?> / HeroID: <?php echo $creature->hero_entry?>)</th></tr>
 		</table>
 		
+		<?php if(isset($loot) && !empty($loot)){ ?>
 		<div style="width:50%;float:left">
-		
-		<table>
-			<tr>
-				<th colspan="4"><h2>Normal Loot</h2></th>
-			</tr>
+		<table><tr><th><h2>Normal Loot</h2></th></tr></table>
+		<table id="loot_table">
+			<thead>
 			<tr>
 				<th>Entry</th>
 				<th>Name</th>
 				<th>Ref</th>
 				<th>Drop</th>
 			</tr>
+			</thead>
+			<tbody>
 			<?php
 		  for($i=0;$i<count($loot);$i++){
 			$item = $loot[$i];
 			$class = ($i % 2 == 0) ? ' class="alt" ' : ''; 
 			?>
 			<tr>
-				<td<?php echo $class ?>><a href="#" rel="item=<?php echo $item->entry ?>"><?php echo $item->entry ?></a></td>
+				<td<?php echo $class ?>><a rel="item=<?php echo $item->entry ?>"><?php echo $item->entry ?></a></td>
 				<td<?php echo $class ?>><?php echo $item->name ?></td>
 				<td<?php echo $class ?>><?php echo $item->ref ?></td>
 				<td<?php echo $class ?>><?php echo $item->drop_chance ?></td>
@@ -69,27 +88,30 @@ if(isset($_GET['id'])){
 			<?php
 			}
 			?>	
+			</tbody>
 		</table>
 		</div>
-		
+		<?php } ?>
+		<?php if(isset($hero_loot) && !empty($hero_loot)){ ?>
 		<div style="width:50%; float:left">
-		<table>
-			<tr>
-				<th colspan="4"><h2>Hero Loot</h2></th>
-			</tr>
+		<table><tr><th><h2>Hero Loot</h2></th></tr></table>
+		<table id="hero_loot_table">
+			<thead>
 			<tr>
 				<th>Entry</th>
 				<th>Name</th>
 				<th>Ref</th>
 				<th>Drop</th>
 			</tr>
+			</thead>
+			<tbody>
 			<?php
 		  for($i=0;$i<count($hero_loot);$i++){
-			$item = $loot[$i];
+			$item = $hero_loot[$i];
 			$class = ($i % 2 == 0) ? ' class="alt" ' : '';
 			?>
 			<tr>
-				<td<?php echo $class ?>><a href="#" rel="item=<?php echo $item->entry ?>"><?php echo $item->entry ?></a></td>
+				<td<?php echo $class ?>><a rel="item=<?php echo $item->entry ?>"><?php echo $item->entry ?></a></td>
 				<td<?php echo $class ?>><?php echo $item->name ?></td>
 				<td<?php echo $class ?>><?php echo $item->ref ?></td>
 				<td<?php echo $class ?>><?php echo $item->drop_chance ?></td>
@@ -97,8 +119,10 @@ if(isset($_GET['id'])){
 			<?php
 			}
 			?>	
+			</tbody>
 		</table>
 		</div>
+		<?php } ?>
 		<?php } ?>
 		<div style="clear: both; padding: 20px; width: 100%; text-align: center">
 		Idea & Code By Norseman & Robigo At <a href="http://rising-gods.de">Rising-Gods</a>
