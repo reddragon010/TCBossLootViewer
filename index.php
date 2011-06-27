@@ -40,7 +40,7 @@ if(isset($_GET['id'])){
 		</table>
 		<?php if(isset($creature)){ ?>
 		<table>
-			<th><h1><?php echo $creature->name ?></h1></th>
+			<tr><th><h1><?php echo $creature->name ?></h1></th></tr>
 		</table>
 		
 		<div style="width:50%;float:left">
@@ -102,7 +102,6 @@ if(isset($_GET['id'])){
 		<?php } ?>
 		<div style="clear: both; padding: 20px; width: 100%; text-align: center">
 		Idea & Code By Norseman & Robigo At <a href="http://rising-gods.de">Rising-Gods</a>
-		</div>
 		</div>
 	</body>
 	</html>
