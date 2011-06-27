@@ -28,7 +28,7 @@ if(isset($_GET['id'])){
 	<html lang="en">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<title>TC-LootViewer <?php echo $creature->name ?></title>
+		<title>TC-LootViewer <?php if(isset($creature)) echo $creature->name; ?></title>
 		<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8">
 		<!-- Wowhead Item Links -->
 		<script type="text/javascript" src="http://static.wowhead.com/widgets/power.js"></script>
@@ -56,7 +56,7 @@ if(isset($_GET['id'])){
 		<?php if(isset($message)){ ?>
 		<div id="message"><?php echo $message ?></div>
 		<?php } ?>
-		<?php if($creature){ ?>
+		<?php if(isset($creature) && $creature){ ?>
 		<table>
 			<tr><th><h1><?php echo $creature->name ?></h1>(NormalID: <?php echo $creature->entry ?> / HeroID: <?php echo $creature->hero_entry?>)</th></tr>
 		</table>
