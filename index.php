@@ -22,6 +22,8 @@ if(isset($_GET['id'])){
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>TC-LootViewer <?php echo $creature->name ?></title>
 		<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8">
+		<!-- Wowhead Item Links -->
+		<script type="text/javascript" src="http://static.wowhead.com/widgets/power.js"></script>
 	</head>
 	<body>
 		<table>
@@ -58,7 +60,7 @@ if(isset($_GET['id'])){
 			$class = ($i % 2 == 0) ? ' class="alt" ' : ''; 
 			?>
 			<tr>
-				<td<?php echo $class ?>><?php echo $item->entry ?></td>
+				<td<?php echo $class ?>><a href="#" rel="item=<?php echo $item->entry ?>"><?php echo $item->entry ?></a></td>
 				<td<?php echo $class ?>><?php echo $item->name ?></td>
 				<td<?php echo $class ?>><?php echo $item->ref ?></td>
 				<td<?php echo $class ?>><?php echo $item->drop_chance ?></td>
@@ -86,7 +88,7 @@ if(isset($_GET['id'])){
 			$class = ($i % 2 == 0) ? ' class="alt" ' : '';
 			?>
 			<tr>
-				<td<?php echo $class ?>><?php echo $item->entry ?></td>
+				<td<?php echo $class ?>><a href="#" rel="item=<?php echo $item->entry ?>"><?php echo $item->entry ?></a></td>
 				<td<?php echo $class ?>><?php echo $item->name ?></td>
 				<td<?php echo $class ?>><?php echo $item->ref ?></td>
 				<td<?php echo $class ?>><?php echo $item->drop_chance ?></td>
