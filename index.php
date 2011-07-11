@@ -20,15 +20,16 @@ if(isset($_GET['id'])){
 	} else {
 		$message = "No Creature With ID $creature_id Found!";
 	}
+	echo Template::render('head', array('creature' => $creature, 'creature_id' => $creature_id));
+} else {
+	echo Template::render('head');
 }
-?>
-<?php echo Template::render('head', array('creature' => $creature)); ?>
-		
-		<?php if(isset($message)){ ?>
+?>	
+	<?php if(isset($message)){ ?>
 		<div id="message"><?php echo $message ?></div>
-		<?php } ?>
+	<?php } ?>
 		
-		<?php if(isset($creature) && $creature){ ?>
+	<?php if(isset($creature) && $creature){ ?>
 		<table>
 			<tr><th><h1><?php echo $creature->name ?></h1>(NormalID: <?php echo $creature->entry ?> / HeroID: <?php echo $creature->hero_entry?>)</th></tr>
 		</table>

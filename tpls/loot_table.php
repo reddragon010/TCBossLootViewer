@@ -1,5 +1,14 @@
-<table><tr><th><h3><?php echo $title ?> <?php if(isset($ref)){ ?>(Mode: <?php echo $ref['lootmode'] ?> / Group: <?php echo $ref['groupid'] ?> / Chance: <?php echo $ref['chance'] ?>%)<?php } ?></h3></th></tr></table>
-<table class="loot_table">
+<?php $tid = rand(1,10000) ?>
+<table><tr onClick="$('#loot_table-<?php echo $tid; ?>').slideToggle(0)">
+	<th>
+		<div style="float: right">[<?php echo count($loot) ?>]</div>
+		<h3><?php echo $title ?> 
+		<?php if(isset($ref)){ ?>
+			(Mode: <?php echo $ref['lootmode'] ?> / Group: <?php echo $ref['groupid'] ?> / Chance: <?php echo $ref['chance'] ?>% / Max: <?php echo $ref['maxcount'] ?>)
+		<?php } ?></h3>
+	</th>
+</tr></table>
+<table class="loot_table" id="loot_table-<?php echo $tid; ?>" style="display: none">
 	<thead>
 	<tr>
 		<th></th>
@@ -24,8 +33,8 @@
 		<td<?php echo $class ?> style="min-width: 40px"><?php echo $item->ref ?></td>
 		<td<?php echo $class ?> style="width: 100%"><?php echo $item->name ?></td>
 		<td<?php echo $class ?> style="min-width: 20px"><?php echo $item->lootmode ?></td>
-		<td<?php echo $class ?> style="min-width: 20px"><?php echo $item->groupid ?></th>
-		<td<?php echo $class ?> style="min-width: 20px"><?php echo $item->maxcount ?></th>
+		<td<?php echo $class ?> style="min-width: 20px"><?php echo $item->groupid ?></td>
+		<td<?php echo $class ?> style="min-width: 20px"><?php echo $item->maxcount ?></td>
 		<td<?php echo $class ?> style="min-width: 20px"><?php echo $item->chance ?>%</td>
 	</tr>
 	<?php
