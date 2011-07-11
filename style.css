@@ -8,6 +8,21 @@ a {
 	color: #c75f3e;
 }
 
+h1 {
+	margin-top: 0;
+}
+
+h3 {
+	margin: 0;
+}
+
+.wowicon {
+	width: 32px;
+	height: 32px;
+	margin: 0;
+	padding: 0;
+}
+
 table {
 	width: 100%;
 }

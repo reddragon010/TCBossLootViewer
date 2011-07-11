@@ -4,3 +4,6 @@ $config['db']['port'] = '3306';
 $config['db']['user'] = 'root';
 $config['db']['pass'] = '';
 $config['db']['name'] = 'world';
+
+$config['wowimages_url'] = 'http://wowdata.buffed.de/img/icons/wow/32/';
+$config['wowimages_ext'] = '.png';

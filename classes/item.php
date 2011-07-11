@@ -5,10 +5,14 @@
 */
 class Item  extends Model
 {
+	public $refchance = '-';
+	public $refgroup = '-';
+	public $refmode = '-';
+	
 	function find_many($ids, $ref=null, $drop_chances=null){
 		array_walk($ids, array('Item', 'add_quotes'));
 		$ids_string = implode($ids,',');
-		$sql = "SELECT entry, name FROM item_template WHERE entry IN (".$ids_string.");";
+		$sql = "SELECT entry, name, displayid FROM item_template WHERE entry IN (".$ids_string.");";
 		$result = Database::query($sql);
 		if(!empty($result)){
 			$items = array();

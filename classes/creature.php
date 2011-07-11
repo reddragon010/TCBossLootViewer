@@ -1,8 +1,5 @@
 <?php
 
-/**
-* 
-*/
 class Creature extends Model
 {	
 	public static function find($entry){
@@ -19,7 +16,7 @@ class Creature extends Model
 		}
 		$d_loot = $this->find_direct_loot($entry);
 		$r_loot = $this->find_ref_loot($entry);
-		return array_merge($d_loot, $r_loot);
+		return array('local' => $d_loot, 'ref' => $r_loot);
 	}
 	
 	public function get_hero_loot(){
@@ -34,25 +31,26 @@ class Creature extends Model
 		$loot = array();
 		$referances = array();
 		//referances
-		$sql = "SELECT ABS(mincountorref) as refid, ChanceOrQuestChance as drop_chance FROM `creature_loot_template` WHERE entry IN(SELECT `lootid` FROM `creature_template` WHERE entry = {$entry} AND mincountorref < 0);";
+		$sql = "SELECT ABS(mincountorref) as refid, ChanceOrQuestChance as chance, lootmode, groupid, maxcount FROM `creature_loot_template` WHERE entry IN(SELECT `lootid` FROM `creature_template` WHERE entry = {$entry} AND mincountorref < 0);";
 		$referances = Database::query($sql)->fetchAll();
 
 		//referanced loot
 		foreach($referances as $ref){
 			$ref_id = $ref['refid'];
-			$dropchance = $ref['drop_chance'];
-    	$sql = "SELECT item_template.entry as entry, item_template.name as name, ((ChanceOrQuestChance / 100) * ($dropchance / 100) * 100) as drop_chance, reference_loot_template.entry as ref FROM `reference_loot_template` INNER JOIN item_template ON (reference_loot_template.item = item_template.entry) WHERE reference_loot_template.entry = (".($ref_id).");";
+			
+     	$sql = "SELECT item_template.entry as entry, reference_loot_template.maxcount, ChanceOrQuestChance as chance, name, icon, lootmode, groupid, reference_loot_template.entry as ref FROM reference_loot_template INNER JOIN item_template ON (reference_loot_template.item = item_template.entry) LEFT JOIN item_icon ON (reference_loot_template.item = item_icon.entry) WHERE reference_loot_template.entry = (".($ref_id).");";
 			//echo($sql . "<br />");
 			$result = Database::query($sql);
 			$items = $result->fetchAll(PDO::FETCH_CLASS, 'Item');
-			$loot = array_merge($loot, $items);
+			$loot[$ref_id] = $ref;
+			$loot[$ref_id]['items'] = $items;
 		}
 		return $loot;
 	}
 	
 	private function find_direct_loot($entry){
 		$d_items  = array();
-		$sql = "SELECT creature_loot_template.item as entry, 0 as ref, ChanceOrQuestChance as drop_chance, name FROM creature_loot_template INNER JOIN item_template ON (creature_loot_template.item = item_template.entry)  WHERE creature_loot_template.entry = (SELECT lootid FROM creature_template WHERE entry = {$entry} AND mincountorref > 0);";
+			$sql = "SELECT item_template.entry as entry, creature_loot_template.maxcount, ChanceOrQuestChance as chance, name, icon, lootmode, groupid, creature_loot_template.item as ref FROM creature_loot_template INNER JOIN item_template ON (creature_loot_template.item = item_template.entry) LEFT JOIN item_icon ON (creature_loot_template.item = item_icon.entry) WHERE creature_loot_template.entry = (SELECT lootid FROM creature_template WHERE entry = $entry AND mincountorref > 0);";
 		$items = Database::query($sql)->fetchAll(PDO::FETCH_CLASS, 'Item');
 		if($items){
 			$d_items = $items;
